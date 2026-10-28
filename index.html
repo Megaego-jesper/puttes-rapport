@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Puttes rapport</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600&display=swap">
+<style>
+/* Layout: petrol hero with copy + report cover on the left and the opt-in form on the right; a four-part "what's inside" grid below. */
+:root {
+  --font-display: "Bricolage Grotesque", "Arial Narrow", system-ui, sans-serif;
+  --font-body: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* hero (same in both themes) */
+  --petrol: #12363f;
+  --petrol-deep: #0c262d;
+  --hero-fg: #f1f6f5;
+  --hero-muted: #b4cbc9;
+  --sun: #f4c542;
+  --sun-ink: #2a2105;
+
+  /* page (themed) */
+  --bg: #f2f6f5;
+  --fg: #14292e;
+  --muted: #516a6e;
+  --line: #cfdcda;
+  --card: #fbfdfc;
+  --card-fg: #14292e;
+  --card-muted: #566f73;
+  --field-bg: #ffffff;
+  --field-line: #b9cbc9;
+  --focus: #1c6f80;
+  --marker: #1c6f80;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0b1d22; --fg: #e5eeed; --muted: #9db6b6; --line: #1f3d44;
+    --card: #17353d; --card-fg: #eaf2f1; --card-muted: #a9c0bf;
+    --field-bg: #0f272d; --field-line: #2f5560; --focus: #7cc7d6; --marker: #7cc7d6;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0b1d22; --fg: #e5eeed; --muted: #9db6b6; --line: #1f3d44;
+  --card: #17353d; --card-fg: #eaf2f1; --card-muted: #a9c0bf;
+  --field-bg: #0f272d; --field-line: #2f5560; --focus: #7cc7d6; --marker: #7cc7d6;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.6;
+}
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; }
+
+.band-inner {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+
+/* ---------- Hero ---------- */
+.hero { background: var(--petrol); color: var(--hero-fg); }
+.hero .band-inner {
+  padding-block: 56px 72px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  grid-template-areas: "copy form" "cover form";
+  column-gap: 64px;
+  row-gap: 40px;
+  align-items: start;
+}
+.brand {
+  grid-column: 1 / -1;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: 0.01em;
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 8px;
+}
+.brand i { width: 14px; height: 14px; background: var(--sun); border-radius: 50%; display: inline-block; }
+.hero .band-inner > .brand { grid-area: auto; }
+
+.copy { grid-area: copy; min-width: 0; }
+.eyebrow {
+  text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.78rem; font-weight: 600;
+  color: var(--sun); margin: 0 0 18px;
+}
+h1 { font-size: clamp(2.3rem, 5.4vw, 4rem); line-height: 1.02; font-weight: 800; letter-spacing: -0.02em; }
+.lead { color: var(--hero-muted); font-size: 1.12rem; max-width: 34em; margin: 22px 0 0; }
+
+.cover-wrap { grid-area: cover; min-width: 0; display: flex; align-items: center; gap: 28px; }
+.cover {
+  width: 190px; flex: none; aspect-ratio: 3 / 4;
+  background: linear-gradient(160deg, #1f5563, #123a45);
+  border-radius: 3px 8px 8px 3px;
+  border-left: 8px solid var(--petrol-deep);
+  box-shadow: 6px 6px 0 #0a2026, 0 18px 30px rgba(0,0,0,0.35);
+  transform: rotate(-3deg);
+  padding: 20px 16px 16px;
+  display: flex; flex-direction: column; justify-content: space-between;
+  max-width: 100%;
+}
+.cover small { text-transform: uppercase; letter-spacing: 0.16em; font-size: 0.62rem; color: var(--hero-muted); font-weight: 600; }
+.cover b { font-family: var(--font-display); font-size: 1.28rem; line-height: 1.08; font-weight: 800; display: block; text-wrap: balance; }
+.cover .tag { background: var(--sun); color: var(--sun-ink); font-weight: 700; font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 5px 9px; align-self: flex-start; border-radius: 2px; }
+.cover-note { color: var(--hero-muted); font-size: 0.98rem; margin: 0; max-width: 20em; min-width: 0; }
+
+/* ---------- Form card ---------- */
+.form-card {
+  grid-area: form;
+  min-width: 0;
+  background: var(--card);
+  color: var(--card-fg);
+  border-radius: 6px;
+  box-shadow: 0 24px 48px rgba(0,0,0,0.28);
+  overflow: hidden;
+  position: relative;
+}
+.form-card::after {
+  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 6px; background: var(--sun);
+}
+.form-head { padding: 30px 28px 6px; }
+.form-head h2 { font-size: 1.7rem; line-height: 1.1; font-weight: 800; letter-spacing: -0.01em; }
+.form-head p { color: var(--card-muted); margin: 10px 0 0; font-size: 0.98rem; }
+form { padding: 18px 28px 28px; display: grid; gap: 16px; }
+.field { display: grid; gap: 6px; }
+label { font-size: 0.86rem; font-weight: 600; color: var(--card-fg); }
+input {
+  font: inherit; font-size: 1rem; color: var(--card-fg);
+  background: var(--field-bg);
+  border: 1.5px solid var(--field-line);
+  border-radius: 4px;
+  padding: 13px 14px;
+  width: 100%;
+}
+input::placeholder { color: var(--card-muted); opacity: 0.7; }
+input:focus-visible, button:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+button {
+  font-family: var(--font-display); font-weight: 700; font-size: 1.08rem; letter-spacing: 0.01em;
+  background: var(--sun); color: var(--sun-ink);
+  border: 0; border-radius: 4px; padding: 15px 18px; cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  box-shadow: 0 3px 0 #b8901c;
+}
+button:hover { transform: translateY(-1px); box-shadow: 0 4px 0 #b8901c; }
+button:active { transform: translateY(2px); box-shadow: 0 1px 0 #b8901c; }
+.fine { font-size: 0.82rem; color: var(--card-muted); margin: 0; }
+.thanks { padding: 34px 28px 40px; }
+.thanks h2 { font-size: 1.7rem; line-height: 1.1; font-weight: 800; }
+.thanks p { color: var(--card-muted); margin: 12px 0 0; }
+[hidden] { display: none !important; }
+
+/* ---------- What's inside ---------- */
+.inside .band-inner { padding-block: 80px 88px; }
+.inside h2 { font-size: clamp(1.8rem, 3.8vw, 2.7rem); line-height: 1.06; font-weight: 800; letter-spacing: -0.015em; max-width: 16em; }
+.inside .sub { color: var(--muted); max-width: 34em; margin: 14px 0 0; }
+.grid {
+  margin-top: 44px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 40px 56px;
+}
+.item { border-top: 2px solid var(--marker); padding-top: 16px; min-width: 0; }
+.item h3 { font-size: 1.3rem; font-weight: 700; line-height: 1.2; }
+.item p { color: var(--muted); margin: 8px 0 0; }
+
+footer { border-top: 1px solid var(--line); color: var(--muted); font-size: 0.88rem; }
+footer .band-inner { padding-block: 24px; display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; }
+
+@media (max-width: 880px) {
+  .hero .band-inner {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "copy" "form" "cover";
+    padding-block: 36px 56px;
+    row-gap: 32px;
+  }
+  .grid { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  .inside .band-inner { padding-block: 56px 64px; }
+}
+@media (max-width: 480px) {
+  .cover-wrap { flex-direction: column; align-items: flex-start; }
+  .form-head, form, .thanks { padding-left: 20px; padding-right: 20px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  button { transition: none; }
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="band-inner">
+    <div class="brand"><i></i> Puttes tjänster</div>
+
+    <div class="copy">
+      <p class="eyebrow">Gratis rapport</p>
+      <h1>Så får du in kunder till ditt konsultföretag</h1>
+      <p class="lead">Jag har samlat hela mitt upplägg i en rapport. Du ser hur det hänger ihop och kan plocka det som passar dig. Skriv in ditt namn och din mejladress så skickar jag den.</p>
+    </div>
+
+    <div class="cover-wrap">
+      <div class="cover" aria-hidden="true">
+        <small>Rapport</small>
+        <b>Hela upplägget för att få in kunder</b>
+        <span class="tag">Gratis</span>
+      </div>
+      <p class="cover-note">En rapport där jag visar hur jag gör, så att du kan se det med egna ögon.</p>
+    </div>
+
+    <section class="form-card" aria-labelledby="form-title">
+      <div id="form-view">
+        <div class="form-head">
+          <h2 id="form-title">Ladda ner rapporten</h2>
+          <p>Den kommer direkt till din inkorg.</p>
+        </div>
+        <form id="optin" novalidate>
+          <div class="field">
+            <label for="namn">Namn</label>
+            <input id="namn" name="namn" type="text" autocomplete="name" placeholder="Ditt för- och efternamn" required>
+          </div>
+          <div class="field">
+            <label for="epost">E-post</label>
+            <input id="epost" name="epost" type="email" autocomplete="email" placeholder="namn@foretag.se" required>
+          </div>
+          <button type="submit">Skicka rapporten till mig</button>
+          <p class="fine" id="msg" role="alert">Ingen spam. Du kan avsluta när du vill.</p>
+        </form>
+      </div>
+      <div class="thanks" id="thanks" hidden>
+        <h2 id="thanks-title">Tack!</h2>
+        <p>Rapporten är på väg till din inkorg. Hittar du den inte inom några minuter, kolla skräpposten.</p>
+      </div>
+    </section>
+  </div>
+</header>
+
+<main class="inside">
+  <div class="band-inner">
+    <h2>Det här får du se i rapporten</h2>
+    <p class="sub">Jag visar hela upplägget som det ser ut hos mig, från första kontakten till betalande kund.</p>
+    <div class="grid">
+      <div class="item">
+        <h3>Hela bilden</h3>
+        <p>Hur de olika delarna hänger ihop, så att du ser vägen från att någon hör av sig första gången till att de blir kund.</p>
+      </div>
+      <div class="item">
+        <h3>Så blir du hittad</h3>
+        <p>Hur människor får upp ögonen för dig utan att du behöver ringa runt eller jaga någon.</p>
+      </div>
+      <div class="item">
+        <h3>Exempel från min vardag</h3>
+        <p>Konkreta exempel på hur det ser ut i min egen verksamhet, så att du kan känna igen dig och göra din egen version.</p>
+      </div>
+      <div class="item">
+        <h3>Så kommer du igång</h3>
+        <p>Vad du kan ta med dig och börja med redan den här veckan, även om du bara har en timme över.</p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="band-inner">
+    <span>© 2026 Puttes tjänster</span>
+    <span>Du får bara mejl som rör rapporten och annat som kan vara till nytta för dig.</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var form = document.getElementById("optin");
+  var msg = document.getElementById("msg");
+  var base = msg.textContent;
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var namn = document.getElementById("namn").value.trim();
+    var epost = document.getElementById("epost").value.trim();
+    var ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(epost);
+    if (!namn) { msg.textContent = "Skriv in ditt namn så vet jag vem jag skickar till."; document.getElementById("namn").focus(); return; }
+    if (!ok) { msg.textContent = "Mejladressen ser inte riktig ut. Kolla att den har ett @ och en ändelse som .se eller .com."; document.getElementById("epost").focus(); return; }
+    msg.textContent = base;
+    document.getElementById("form-view").hidden = true;
+    document.getElementById("thanks-title").textContent = "Tack, " + namn.split(" ")[0] + "!";
+    document.getElementById("thanks").hidden = false;
+  });
+})();
+</script>
+</body>
+</html>
